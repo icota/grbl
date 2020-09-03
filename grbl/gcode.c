@@ -143,6 +143,8 @@ uint8_t gc_execute_line(char *line)
       case 'G':
         // Determine 'G' command and its modal group
         switch(int_value) {
+            case 29:
+                gc_block.non_modal_command = int_value;
           case 10: case 28: case 30: case 92:
             // Check for G10/28/30/92 being called with G0/1/2/3/38 on same block.
             // * G43.1 is also an axis command but is not explicitly defined this way.
@@ -450,6 +452,12 @@ uint8_t gc_execute_line(char *line)
     if (bit_isfalse(value_words,bit(WORD_P))) { FAIL(STATUS_GCODE_VALUE_WORD_MISSING); } // [P word missing]
     bit_false(value_words,bit(WORD_P));
   }
+
+  // [29. Find home ]: N/A
+    if (gc_block.non_modal_command == NON_MODAL_FIND_HOME) {
+//        if (bit_isfalse(value_words,bit(WORD_P))) { FAIL(STATUS_GCODE_VALUE_WORD_MISSING); } // [P word missing]
+//        bit_false(value_words,bit(WORD_P));
+    }
 
   // [11. Set active plane ]: N/A
   switch (gc_block.modal.plane_select) {
@@ -967,6 +975,9 @@ uint8_t gc_execute_line(char *line)
 
   // [10. Dwell ]:
   if (gc_block.non_modal_command == NON_MODAL_DWELL) { mc_dwell(gc_block.values.p); }
+
+    // [29. Find home ]:
+    if (gc_block.non_modal_command == NON_MODAL_FIND_HOME) { mc_homing_cycle(HOMING_CYCLE_Z); }
 
   // [11. Set active plane ]:
   gc_state.modal.plane_select = gc_block.modal.plane_select;

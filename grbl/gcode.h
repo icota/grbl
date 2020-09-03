@@ -58,6 +58,7 @@
 #define NON_MODAL_DWELL 4 // G4 (Do not alter value)
 #define NON_MODAL_SET_COORDINATE_DATA 10 // G10 (Do not alter value)
 #define NON_MODAL_GO_HOME_0 28 // G28 (Do not alter value)
+#define NON_MODAL_FIND_HOME 29 // G29 (Do not alter value)
 #define NON_MODAL_SET_HOME_0 38 // G28.1 (Do not alter value)
 #define NON_MODAL_GO_HOME_1 30 // G30 (Do not alter value)
 #define NON_MODAL_SET_HOME_1 40 // G30.1 (Do not alter value)
